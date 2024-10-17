@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #554f4f;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        
+        .flex-container{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: white;
+        }
+
+        .flex-item {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .about-me, .personal-information, .skill {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+
+        @media (min-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+
+        @media (min-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About Me</h1>
+    </header>
+    <main class="grid-container">
+        <section class="personal-information">
+            <h2>Personal Information</h2>
+            <div class="flex-container">
+                <div class="flex-item">Name: Muhammad Rajif Raditya </div>
+                <div class="flex-item">Born: Purbalingga, 19 Desember </div>
+                <div class="flex-item">Gender: Male</div>
+                <div class="flex-item">Adress: Bogor</div>
+            </div>
+        </section>
+        <section class="about-me">
+            <h2>About Me</h2>
+            <p>I am interested in photography, editing, 3d modeling,
+                and programming or anything related to computers
+                and I also like to learn new things 
+            </p>
+            <p>    
+                during junior high school, I was selected to be a
+                member of the student council and was selected to
+                be a "Dewan Penggalang Pramuka" in my school
+                during high school, I continued to develop my skills
+                and got the opportunity to be a director and editor on
+                a class film project and also take care of the technical
+                part such as being responsible for poster design, ticket
+                design, and dubbing actors in a theater project at
+                school
+            </p>
+        </section>
+        <section class="skill">
+            <h2>Skills</h2>
+            <div class="flex-container">
+                <div class="flex-item">Programming</div>
+                <div class="flex-item">3D Modelling</div>
+                <div class="flex-item">Video Editor</div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
