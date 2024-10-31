@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List API</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .todo-item { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .todo-item input { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <div id="todoList"></div>
+
+    <h2>Get Todo by ID</h2>
+    <input type="text" id="getId" placeholder="Enter Todo ID">
+    <button onclick="getTodoById()">Get Todo</button>
+    <div id="todoDetail"></div>
+
+    <h2>Update Todo by ID</h2>
+    <input type="text" id="updateId" placeholder="Enter Todo ID">
+    <input type="text" id="updateTitle" placeholder="Enter New Title">
+    <button onclick="updateTodoById()">Update Todo</button>
+
+    <h2>Delete Todo by ID</h2>
+    <input type="text" id="deleteId" placeholder="Enter Todo ID">
+    <button onclick="deleteTodoById()">Delete Todo</button>
+
+    <script>
+        const API_BASE_URL = 'https://api.freeapi.app/todo';
+        const API_KEY = 'YOUR_API_KEY'; // Ganti dengan API Key Anda
+
+        // Fungsi untuk mendapatkan semua Todo
+        async function getAllTodos() {
+            try {
+                const response = await fetch(`${API_BASE_URL}`, {
+                    headers: { 'Authorization': `Bearer ${API_KEY}` }
+                });
+                const todos = await response.json();
+                const todoListElement = document.getElementById('todoList');
+                todoListElement.innerHTML = '';
+                todos.forEach(todo => {
+                    const todoElement = document.createElement('div');
+                    todoElement.className = 'todo-item';
+                    todoElement.innerHTML = `<strong>ID:</strong> ${todo.id} - <strong>Title:</strong> ${todo.title}`;
+                    todoListElement.appendChild(todoElement);
+                });
+            } catch (error) {
+                console.error('Error fetching todos:', error);
+            }
+        }
+
+        // Fungsi untuk mendapatkan Todo berdasarkan ID
+        async function getTodoById() {
+            const id = document.getElementById('getId').value;
+            try {
+                const response = await fetch(`${API_BASE_URL}/${id}`, {
+                    headers: { 'Authorization': `Bearer ${API_KEY}` }
+                });
+                const todo = await response.json();
+                const todoDetailElement = document.getElementById('todoDetail');
+                todoDetailElement.innerHTML = `<div class="todo-item"><strong>ID:</strong> ${todo.id} - <strong>Title:</strong> ${todo.title}</div>`;
+            } catch (error) {
+                console.error('Error fetching todo by id:', error);
+            }
+        }
+
+        // Fungsi untuk memperbarui Todo berdasarkan ID
+        async function updateTodoById() {
+            const id = document.getElementById('updateId').value;
+            const title = document.getElementById('updateTitle').value;
+            try {
+                const response = await fetch(`${API_BASE_URL}/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({ title })
+                });
+                const updatedTodo = await response.json();
+                alert(`Todo updated: ${updatedTodo.title}`);
+                getAllTodos(); // Refresh todo list
+            } catch (error) {
+                console.error('Error updating todo by id:', error);
+            }
+        }
+
+        // Fungsi untuk menghapus Todo berdasarkan ID
+        async function deleteTodoById() {
+            const id = document.getElementById('deleteId').value;
+            try {
+                await fetch(`${API_BASE_URL}/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${API_KEY}` }
+                });
+                alert('Todo deleted');
+                getAllTodos(); // Refresh todo list
+            } catch (error) {
+                console.error('Error deleting todo by id:', error);
+            }
+        }
+
+        // Memanggil semua todo saat halaman dimuat
+        window.onload = getAllTodos;
+    </script>
+</body>
+</html>
+
